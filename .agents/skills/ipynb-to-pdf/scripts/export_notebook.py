@@ -12,9 +12,17 @@ import subprocess
 import html
 import re
 import argparse
-from pygments import highlight
-from pygments.lexers import PythonLexer
-from pygments.formatters import HtmlFormatter
+import io
+import tokenize
+import keyword
+
+try:
+    from pygments import highlight  # type: ignore
+    from pygments.lexers import PythonLexer  # type: ignore
+    from pygments.formatters import HtmlFormatter  # type: ignore
+    HAS_PYGMENTS = True
+except ImportError:
+    HAS_PYGMENTS = False
 
 def highlight_python(code):
     keywords = {
